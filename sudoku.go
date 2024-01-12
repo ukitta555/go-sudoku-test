@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 Struct that represent coordinates of a cell in a sudoku board.
 Coordinates (programmers love to count from 0 for some reason, so last coordinate would be 8):
@@ -14,7 +16,7 @@ type BoardCellCoordinates struct {
 }
 
 /*
-Struct that represent coordinates of a SQUARE in a sudoku board. 
+Struct that represent coordinates of a SQUARE in a sudoku board.
 This is semantically different from the BoardCellCoordinates struct.
 The struct in question encodes the coordinates of one of the nine 3x3 squares in the sudoku board.
 This struct is used for finding the coordinates of a top-left cell in a sudoku board.
@@ -120,6 +122,13 @@ func SquareIsValid(board [][]int, cellToValidate BoardCellCoordinates) bool {
 func recursive_bruteforce(board [][]int, emptyCells []BoardCellCoordinates, emptyCellToProcess int) bool {
 	// base case - in case we filled all cells without breaking the rules, the sudoku is solved.
 	if len(emptyCells) == emptyCellToProcess {
+		fmt.Println("Solution:")
+		for row := 0; row < 9; row++ {
+			for col := 0; col < 9; col++ {
+				fmt.Printf("%d ", board[row][col])
+			}
+			fmt.Println()
+		}
 		return true
 	}
 	currentEmptyCell := emptyCells[emptyCellToProcess]
@@ -139,7 +148,6 @@ func recursive_bruteforce(board [][]int, emptyCells []BoardCellCoordinates, empt
 	}
 	return false
 }
-
 
 func SolveSudoku(board [][]int) [][]int {
 	// don't know whether I'm able to change the function interface to return an error in case of bad input...
